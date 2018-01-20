@@ -22,10 +22,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
+                android:id="@+id/movie_thumbnail"
                 />
 
             <TextView
-                android:id="@+id/movie_title"
+                android:id="@+id/movie_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/movie_title_padding"
