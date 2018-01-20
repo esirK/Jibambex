@@ -31,11 +31,12 @@ public class MainActivity extends AppCompatActivity {
     private long playbackPosition;
     private int currentWindow;
     private boolean playWhenReady = true;
-
+    private String url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        url = getIntent().getExtras().getString("url");
         playerView = findViewById(R.id.video_view);
         componentListener = new ComponentListener();
         videoLoadingPb = findViewById(R.id.loading_vid);
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             player.seekTo(currentWindow, playbackPosition);
         }
         MediaSource mediaSource = buildMediaSource(Uri.
-                parse("http://dl.tehmovies.org/94/series/24.legacy/s1/24.Legacy.S01E06.PROPER.480p.Tehmovies_me.mkv"));
+                parse(url));
         player.prepare(mediaSource, true, false);
         player.addListener(componentListener);
     }
