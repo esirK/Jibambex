@@ -1,5 +1,6 @@
 package com.janta.esir.jibambetryx;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,8 +36,14 @@ public class MoviesFragment extends Fragment{
         recyclerView = rootView.findViewById(R.id.movies_recycler_view);
         movieList = new ArrayList<>();
         movieAdapter = new MovieAdapter(getContext(), movieList);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager portraitLayoutManager = new GridLayoutManager(getContext(), 2);
+        RecyclerView.LayoutManager landscapeLayoutManager = new GridLayoutManager(getContext(), 4);
+
+        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(portraitLayoutManager);
+        }else{
+            recyclerView.setLayoutManager(landscapeLayoutManager);
+        }
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(movieAdapter);
 
