@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.janta.esir.jibambetryx.MoviesCategoryFragment;
 import com.janta.esir.jibambetryx.MoviesFragment;
 
 /**
@@ -18,11 +19,16 @@ public class HomePagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = new MoviesFragment();
-        Bundle args = new Bundle();
-        args.putInt("Title", position);
-        fragment.setArguments(args);
-        return fragment;
+        //Show Movies categories on first tab and series on the other tab
+        Fragment moviesCategoriesFragment = new MoviesCategoryFragment();
+        Fragment seriesFragment = new MoviesFragment();
+
+        if(position == 0) {
+            return moviesCategoriesFragment;
+        }
+        else {
+            return seriesFragment;
+        }
     }
 
     @Override
@@ -33,6 +39,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter{
     @Override
     public CharSequence getPageTitle(int position) {
         super.getPageTitle(position);
-        return ("Checki "+position);
+        if(position == 0){
+            return ("Movies");
+        }
+        return ("Series");
     }
 }
