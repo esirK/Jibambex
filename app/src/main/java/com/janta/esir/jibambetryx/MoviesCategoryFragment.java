@@ -1,20 +1,30 @@
 package com.janta.esir.jibambetryx;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.janta.esir.jibambetryx.adapters.MoviesCategoryAdapter;
+import com.janta.esir.jibambetryx.helpers.JibambeApi;
 import com.janta.esir.jibambetryx.models.MoviesCategory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by isaiahngaruiya on 21/01/2018.
@@ -24,6 +34,7 @@ public class MoviesCategoryFragment extends Fragment{
 
     private List<MoviesCategory> moviesCategoryList; //Program to an interface not implementation
     private MoviesCategoryAdapter moviesCategoryAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +47,13 @@ public class MoviesCategoryFragment extends Fragment{
         moviesCategoryAdapter = new MoviesCategoryAdapter(getContext(), moviesCategoryList);
 
         RecyclerView.LayoutManager portraitLayoutManager = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(portraitLayoutManager);
+        RecyclerView.LayoutManager landscapeLayoutManager = new GridLayoutManager(getContext(), 3);
+
+        if(getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(portraitLayoutManager);
+        }else{
+            recyclerView.setLayoutManager(landscapeLayoutManager);
+        }
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(moviesCategoryAdapter);
 
@@ -45,24 +62,26 @@ public class MoviesCategoryFragment extends Fragment{
     }
 
     private void setUpCategories() {
-        String[] moviesCategoriesNames = new String[]{
-                "Animations",
-                "Action",
-                "Comedy",
-                "Sci-fi",
-                "Horror"
-        };
-        String[] moviesCategoriesThumbnails = new String[]{
-                "https://i.pinimg.com/564x/03/6a/e4/036ae4354a75a2652cbb44a01783551e--movie-list.jpg",
-                "https://cnet3.cbsistatic.com/img/q0uiGtyscUabD73kcVbHd7HrXhM=/770x433/2016/02/17/ddc19049-cda2-41d9-83d2-d87c3bb9b746/4k-blu-ray.jpg",
-                "https://pandaneo.com/wp-content/uploads/2016/06/camping-movies-800x510.jpg",
-                "https://crisisoninfinitethoughts.files.wordpress.com/2014/11/894a9-best2bsci2bfi2bfilms2bcollage2b2.jpg",
-                "http://top101news.com/wp-content/uploads/2016/09/The-Exorcist-Deadly-Horror-Movies-of-All-Time-2018.jpg"
-        };
-        for(int x = 0; x<moviesCategoriesNames.length; x++){
-            MoviesCategory moviesCategory = new MoviesCategory(moviesCategoriesNames[x], x, moviesCategoriesThumbnails[x]);
-            moviesCategoryList.add(moviesCategory);
-        }
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(Utils.URL)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        JibambeApi jibambeApi = retrofit.create(JibambeApi.class);
+        Call<List<MoviesCategory>> call = jibambeApi.moviesCategories();
+
+        call.enqueue(new Callback<List<MoviesCategory>>() {
+            @Override
+            public void onResponse(Call<List<MoviesCategory>> call, Response<List<MoviesCategory>> response) {
+                moviesCategoryList = response.body();
+                moviesCategoryAdapter.updateCategories(moviesCategoryList);
+            }
+
+            @Override
+            public void onFailure(Call<List<MoviesCategory>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error ", Toast.LENGTH_LONG).show();
+            }
+        });
         moviesCategoryAdapter.notifyDataSetChanged();
     }
 }
