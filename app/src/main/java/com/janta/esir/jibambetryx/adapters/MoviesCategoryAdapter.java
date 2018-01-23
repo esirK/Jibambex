@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,10 @@ public class MoviesCategoryAdapter extends RecyclerView.Adapter<MoviesCategoryAd
         this.mContext = context;
         this.moviesCategoryList = moviesCategoryList;
     }
+    public void updateCategories(List<MoviesCategory> moviesCategories){
+        this.moviesCategoryList = moviesCategories;
+        notifyDataSetChanged();
+    }
     @Override
     public MoviesCategoryAdapter.CategoriesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -56,6 +61,7 @@ public class MoviesCategoryAdapter extends RecyclerView.Adapter<MoviesCategoryAd
                 Intent singleCategory = new Intent(mContext, SingleCategory.class);
                 Bundle args = new Bundle();
                 args.putString("name", moviesCategory.getName());
+                args.putInt("index", moviesCategory.getId());
                 singleCategory.putExtras(args);
                 mContext.startActivity(singleCategory);
             }

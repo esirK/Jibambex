@@ -5,4 +5,5 @@ package com.janta.esir.jibambetryx;
  */
 
 public class Utils {
+    public  static String URL = "http://192.168.44.140:8000";
 }

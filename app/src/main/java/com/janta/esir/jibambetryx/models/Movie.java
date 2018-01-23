@@ -5,7 +5,7 @@ package com.janta.esir.jibambetryx.models;
  */
 
 public class Movie {
-    private String name, thumbnail, source, duration;
+    private String name, thumbnail, source_url, duration;
 
     public Movie(){
 
@@ -13,7 +13,7 @@ public class Movie {
     public Movie(String name, String thumbnail, String source, String duration){
         this.name = name;
         this.thumbnail = thumbnail;
-        this.source = source;
+        this.source_url = source;
         this.duration = duration;
     }
     public String getName(){
@@ -24,7 +24,7 @@ public class Movie {
         return this.thumbnail;
     }
     public String getSource(){
-        return this.source;
+        return this.source_url;
     }
     public String getDuration(){
         return this.duration;

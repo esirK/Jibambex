@@ -6,14 +6,14 @@ package com.janta.esir.jibambetryx.models;
 
 public class MoviesCategory {
     private String name, thumbnail;
-    private int index;
+    private int id;
 
     public MoviesCategory(){
 
     }
     public MoviesCategory(String name, int index, String thumbnail){
         this.name = name;
-        this.index = index;
+        this.id = index;
         this.thumbnail = thumbnail;
     }
 
@@ -21,9 +21,10 @@ public class MoviesCategory {
         return this.name;
     }
 
-    public int getIndex(){
-        return this.index;
+    public int getId(){
+        return this.id;
     }
+
     public String getThumbnail(){
         return this.thumbnail;
     }

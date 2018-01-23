@@ -30,6 +30,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.movieList = movieList;
         this.mContext = mContext;
     }
+    public void updateMovies(List<Movie> movieList){
+        this.movieList = movieList;
+        notifyDataSetChanged();
+    }
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View movieView = LayoutInflater.from(parent.getContext())
