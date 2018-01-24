@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,7 @@ public class MoviesCategoryFragment extends Fragment{
 
     private List<MoviesCategory> moviesCategoryList; //Program to an interface not implementation
     private MoviesCategoryAdapter moviesCategoryAdapter;
+    private ContentLoadingProgressBar videoLoadingPb;
 
     @Nullable
     @Override
@@ -42,7 +44,8 @@ public class MoviesCategoryFragment extends Fragment{
         //Inflate movie fragment. sharing it with MovieFragment
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.movies_recycler_view);
-
+        videoLoadingPb = view.findViewById(R.id.loading_categories);
+        videoLoadingPb.setVisibility(View.VISIBLE);
         moviesCategoryList = new ArrayList<>();
         moviesCategoryAdapter = new MoviesCategoryAdapter(getContext(), moviesCategoryList);
 
@@ -75,6 +78,7 @@ public class MoviesCategoryFragment extends Fragment{
             public void onResponse(Call<List<MoviesCategory>> call, Response<List<MoviesCategory>> response) {
                 moviesCategoryList = response.body();
                 moviesCategoryAdapter.updateCategories(moviesCategoryList);
+                videoLoadingPb.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -82,6 +86,6 @@ public class MoviesCategoryFragment extends Fragment{
                 Toast.makeText(getContext(), "Error ", Toast.LENGTH_LONG).show();
             }
         });
-        moviesCategoryAdapter.notifyDataSetChanged();
+//        moviesCategoryAdapter.notifyDataSetChanged();
     }
 }
