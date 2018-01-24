@@ -16,15 +16,26 @@
             android:orientation="vertical"
             android:id="@+id/movie_item_layout"
             >
-            <ImageView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_card_height"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:scaleType="fitXY"
-                android:id="@+id/category_thumbnail"
-                />
+                android:layout_height="@dimen/movie_card_height">
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/loading_img"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="visible" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/movie_card_height"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:scaleType="fitXY"
+                    android:id="@+id/category_thumbnail"
+                    />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/category_name"

@@ -3,6 +3,7 @@ package com.janta.esir.jibambetryx.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.janta.esir.jibambetryx.MainActivity;
 import com.janta.esir.jibambetryx.R;
 import com.janta.esir.jibambetryx.SingleCategory;
@@ -45,12 +49,24 @@ public class MoviesCategoryAdapter extends RecyclerView.Adapter<MoviesCategoryAd
     }
 
     @Override
-    public void onBindViewHolder(CategoriesViewHolder holder, int position) {
+    public void onBindViewHolder(final CategoriesViewHolder holder, int position) {
         final MoviesCategory moviesCategory = moviesCategoryList.get(position);
 
         holder.name.setText(moviesCategory.getName());
         Glide.with(mContext)
                 .load(moviesCategory.getThumbnail())
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        holder.loading_img.setVisibility(View.GONE);
+                        return false;
+                    }
+                })
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter()
                 .into(holder.thumbnail);
@@ -77,11 +93,13 @@ public class MoviesCategoryAdapter extends RecyclerView.Adapter<MoviesCategoryAd
 
         public ImageView thumbnail;
         public TextView name;
+        public ContentLoadingProgressBar loading_img;
 
         public CategoriesViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.category_name);
             thumbnail = itemView.findViewById(R.id.category_thumbnail);
+            loading_img = itemView.findViewById(R.id.loading_img);
         }
     }
 }

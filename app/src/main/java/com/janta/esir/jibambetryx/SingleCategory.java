@@ -3,11 +3,13 @@ package com.janta.esir.jibambetryx;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Toast;
 
 import com.janta.esir.jibambetryx.adapters.MovieAdapter;
@@ -34,6 +36,7 @@ public class SingleCategory extends AppCompatActivity{
     private MovieAdapter movieAdapter;
     private Toolbar toolbar;
     private int category_id;
+    private ContentLoadingProgressBar loading_movies;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class SingleCategory extends AppCompatActivity{
         toolbar = findViewById(R.id.toolbar);
         String title = getIntent().getExtras().getString("name");
         category_id = getIntent().getExtras().getInt("index");
+        loading_movies = findViewById(R.id.loading_movies);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,9 +65,9 @@ public class SingleCategory extends AppCompatActivity{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(movieAdapter);
 
-        sampleMovies();
+        LoadMovies();
     }
-    private void sampleMovies() {
+    private void LoadMovies() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Utils.URL)
                 .addConverterFactory(GsonConverterFactory.create());
@@ -76,7 +80,9 @@ public class SingleCategory extends AppCompatActivity{
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 movieList = response.body();
-                movieAdapter.updateMovies(movieList);
+                movieAdapter.updateMovies(movieList); //This will result in the recycler view being repopulated
+                // On receiving response hide the loading movies progress dialog
+                loading_movies.setVisibility(View.GONE);
             }
 
             @Override

@@ -15,23 +15,34 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            <ImageView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_card_height"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:scaleType="fitXY"
-                android:id="@+id/movie_thumbnail"
-                />
+                android:layout_height="@dimen/movie_card_height">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:scaleType="fitXY"
+                    android:id="@+id/movie_thumbnail"
+                    />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/loading_img"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="visible" />
+            </FrameLayout>
+                <TextView
+                    android:id="@+id/movie_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/movie_title_padding"
+                    android:text="Avangers"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
-            <TextView
-                android:id="@+id/movie_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/movie_title_padding"
-                android:text="Avangers"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
             <TextView
                 android:id="@+id/movie_duration"
                 android:layout_width="match_parent"

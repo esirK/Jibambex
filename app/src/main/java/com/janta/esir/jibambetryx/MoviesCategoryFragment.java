@@ -41,7 +41,7 @@ public class MoviesCategoryFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        //Inflate movie fragment. sharing it with MovieFragment
+        //Inflate movie1 fragment. sharing it with MovieFragment
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.movies_recycler_view);
         videoLoadingPb = view.findViewById(R.id.loading_categories);
