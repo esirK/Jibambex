@@ -8,10 +8,10 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.janta.esir.jibambetryx.adapters.MoviesCategoryAdapter;
@@ -36,6 +36,7 @@ public class MoviesCategoryFragment extends Fragment{
     private List<MoviesCategory> moviesCategoryList; //Program to an interface not implementation
     private MoviesCategoryAdapter moviesCategoryAdapter;
     private ContentLoadingProgressBar videoLoadingPb;
+    private TextView tv_no_cat;
 
     @Nullable
     @Override
@@ -44,6 +45,8 @@ public class MoviesCategoryFragment extends Fragment{
         //Inflate movie1 fragment. sharing it with MovieFragment
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.movies_recycler_view);
+        tv_no_cat = view.findViewById(R.id.tv_no_cat);
+
         videoLoadingPb = view.findViewById(R.id.loading_categories);
         videoLoadingPb.setVisibility(View.VISIBLE);
         moviesCategoryList = new ArrayList<>();
@@ -79,10 +82,14 @@ public class MoviesCategoryFragment extends Fragment{
                 moviesCategoryList = response.body();
                 moviesCategoryAdapter.updateCategories(moviesCategoryList);
                 videoLoadingPb.setVisibility(View.INVISIBLE);
+                if (moviesCategoryList.size() == 0){
+                    tv_no_cat.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailure(Call<List<MoviesCategory>> call, Throwable t) {
+                //Network error
                 Toast.makeText(getContext(), "Error ", Toast.LENGTH_LONG).show();
             }
         });
