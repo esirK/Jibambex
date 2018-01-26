@@ -9,7 +9,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.janta.esir.jibambetryx.adapters.MovieAdapter;
@@ -37,6 +39,7 @@ public class SingleCategory extends AppCompatActivity{
     private Toolbar toolbar;
     private int category_id;
     private ContentLoadingProgressBar loading_movies;
+    private TextView tv_no_movie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class SingleCategory extends AppCompatActivity{
 
         RecyclerView.LayoutManager portraitLayoutManager = new GridLayoutManager(this, 2);
         RecyclerView.LayoutManager landscapeLayoutManager = new GridLayoutManager(this, 4);
+
+        tv_no_movie = findViewById(R.id.tv_no_movie);
 
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerView.setLayoutManager(portraitLayoutManager);
@@ -83,6 +88,10 @@ public class SingleCategory extends AppCompatActivity{
                 movieAdapter.updateMovies(movieList); //This will result in the recycler view being repopulated
                 // On receiving response hide the loading movies progress dialog
                 loading_movies.setVisibility(View.GONE);
+
+                if(movieList.size() == 0){
+                    tv_no_movie.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
