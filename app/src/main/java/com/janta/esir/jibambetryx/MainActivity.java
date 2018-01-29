@@ -6,6 +6,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Since this is a player, ensure that the screen does not go to sleep
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         url = getIntent().getExtras().getString("url");
         playerView = findViewById(R.id.video_view);
         componentListener = new ComponentListener();
@@ -125,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case  ExoPlayer.STATE_READY:
                     videoLoadingPb.hide();
+                    break;
+                case ExoPlayer.STATE_ENDED:
+                    finish();
                     break;
                 default:
                     break;

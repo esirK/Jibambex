@@ -25,10 +25,10 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.home_screen);
         viewPager = findViewById(R.id.pager);
         toolbar = findViewById(R.id.toolbar);
+        tabLayout = findViewById(R.id.tabs);
         setSupportActionBar(toolbar);
         homePagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(homePagerAdapter);
-        tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
 }
