@@ -1,5 +1,4 @@
 package com.janta.esir.jibambetryx.models;
-
 /**
  * Created by isaiahngaruiya on 21/01/2018.
  */

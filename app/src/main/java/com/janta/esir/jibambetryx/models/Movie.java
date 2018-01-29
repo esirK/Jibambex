@@ -1,10 +1,9 @@
 package com.janta.esir.jibambetryx.models;
-
 /**
  * Created by isaiahngaruiya on 19/01/2018.
  */
 
-public class Movie {
+public class Movie{
     private String name, thumbnail, source_url, duration;
 
     public Movie(){
