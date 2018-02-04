@@ -1,6 +1,7 @@
 package com.janta.esir.jibambetryx;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -9,8 +10,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,7 +97,12 @@ public class SingleCategory extends AppCompatActivity{
 
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Error ", Toast.LENGTH_LONG).show();
+                loading_movies.setVisibility(View.GONE);
+                Toast.makeText(getBaseContext(), "Network Error ", Toast.LENGTH_LONG).show();
+                tv_no_movie.setText("Network Error");
+                tv_no_movie.setTextColor(Color.RED);
+                tv_no_movie.setTextSize(24);
+                tv_no_movie.setVisibility(View.VISIBLE);
             }
         });
         movieAdapter.notifyDataSetChanged();
