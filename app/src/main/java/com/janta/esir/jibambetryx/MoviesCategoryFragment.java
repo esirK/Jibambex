@@ -90,9 +90,11 @@ public class MoviesCategoryFragment extends Fragment{
             @Override
             public void onFailure(Call<List<MoviesCategory>> call, Throwable t) {
                 //Network error
-                Toast.makeText(getContext(), "Error ", Toast.LENGTH_LONG).show();
+                tv_no_cat.setVisibility(View.VISIBLE);
+
+                Toast.makeText(getContext(), "Network Error ", Toast.LENGTH_LONG).show();
+                videoLoadingPb.setVisibility(View.GONE);
             }
         });
-//        moviesCategoryAdapter.notifyDataSetChanged();
     }
 }

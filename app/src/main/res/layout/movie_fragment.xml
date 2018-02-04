@@ -7,14 +7,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:paddingTop="?attr/actionBarSize"
     >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="No Movie Category Found"
-        android:id="@+id/tv_no_cat"
-        android:textAlignment="center"
-        android:visibility="gone"
-        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/movies_recycler_view"
         android:layout_width="match_parent"
@@ -31,4 +23,13 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:visibility="visible" />
+    <TextView
+        android:layout_below="@id/loading_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Movie Category Found"
+        android:id="@+id/tv_no_cat"
+        android:textAlignment="center"
+        android:visibility="gone"
+        />
 </RelativeLayout>
