@@ -21,13 +21,15 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import butterknife.BindView;
+
 public class MainActivity extends AppCompatActivity {
 
-    private SimpleExoPlayerView playerView;
     private SimpleExoPlayer player;
     private ComponentListener componentListener;
-    private ContentLoadingProgressBar videoLoadingPb;
 
+    @BindView(R.id.video_view) SimpleExoPlayerView playerView;
+    @BindView(R.id.loading_vid) ContentLoadingProgressBar videoLoadingPb;
 
     private long playbackPosition;
     private int currentWindow;

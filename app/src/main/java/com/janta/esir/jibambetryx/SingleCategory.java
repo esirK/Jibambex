@@ -22,6 +22,8 @@ import com.janta.esir.jibambetryx.models.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,34 +36,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SingleCategory extends AppCompatActivity{
 
-    private RecyclerView recyclerView;
     private List<Movie> movieList;
     private MovieAdapter movieAdapter;
-    private Toolbar toolbar;
     private int category_id;
-    private ContentLoadingProgressBar loading_movies;
-    private TextView tv_no_movie;
+
+    @BindView(R.id.movies_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.loading_movies) ContentLoadingProgressBar loading_movies;
+    @BindView(R.id.tv_no_movie) TextView tv_no_movie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_category);
-        recyclerView = findViewById(R.id.movies_recycler_view);
+
+        ButterKnife.bind(this);
+
         movieList = new ArrayList<>();
         movieAdapter = new MovieAdapter(this, movieList);
 
-        toolbar = findViewById(R.id.toolbar);
         String title = getIntent().getExtras().getString("name");
         category_id = getIntent().getExtras().getInt("index");
-        loading_movies = findViewById(R.id.loading_movies);
+
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView.LayoutManager portraitLayoutManager = new GridLayoutManager(this, 2);
         RecyclerView.LayoutManager landscapeLayoutManager = new GridLayoutManager(this, 4);
-
-        tv_no_movie = findViewById(R.id.tv_no_movie);
 
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerView.setLayoutManager(portraitLayoutManager);

@@ -24,6 +24,9 @@ import com.janta.esir.jibambetryx.models.MoviesCategory;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by isaiahngaruiya on 21/01/2018.
  */
@@ -89,17 +92,15 @@ public class MoviesCategoryAdapter extends RecyclerView.Adapter<MoviesCategoryAd
         return moviesCategoryList.size();
     }
 
-    public static class CategoriesViewHolder extends RecyclerView.ViewHolder{
+    static class CategoriesViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView thumbnail;
-        public TextView name;
-        public ContentLoadingProgressBar loading_img;
+        @BindView(R.id.category_thumbnail) ImageView thumbnail;
+        @BindView(R.id.category_name) TextView name;
+        @BindView(R.id.loading_img) ContentLoadingProgressBar loading_img;
 
-        public CategoriesViewHolder(View itemView) {
+        CategoriesViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.category_name);
-            thumbnail = itemView.findViewById(R.id.category_thumbnail);
-            loading_img = itemView.findViewById(R.id.loading_img);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

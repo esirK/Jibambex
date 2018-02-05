@@ -21,6 +21,9 @@ import com.janta.esir.jibambetryx.models.Movie;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by isaiahngaruiya on 19/01/2018.
  */
@@ -89,18 +92,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movieList.size();
     }
 
-    public static class MovieViewHolder extends RecyclerView.ViewHolder{
+    static class MovieViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView movieName, movieDuration;
-        public ImageView thumbnail;
-        private ContentLoadingProgressBar loading_img;
+        @BindView(R.id.movie_name) TextView movieName;
+        @BindView(R.id.movie_duration) TextView movieDuration;
+        @BindView(R.id.movie_thumbnail) ImageView thumbnail;
+        @BindView(R.id.loading_img) ContentLoadingProgressBar loading_img;
 
-        public MovieViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
-            movieName = itemView.findViewById(R.id.movie_name);
-            movieDuration = itemView.findViewById(R.id.movie_duration);
-            thumbnail = itemView.findViewById(R.id.movie_thumbnail);
-            loading_img = itemView.findViewById(R.id.loading_img);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

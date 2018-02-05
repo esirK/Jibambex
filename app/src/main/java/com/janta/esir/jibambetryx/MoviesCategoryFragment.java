@@ -1,6 +1,7 @@
 package com.janta.esir.jibambetryx;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,8 @@ import com.janta.esir.jibambetryx.models.MoviesCategory;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,8 +38,11 @@ public class MoviesCategoryFragment extends Fragment{
 
     private List<MoviesCategory> moviesCategoryList; //Program to an interface not implementation
     private MoviesCategoryAdapter moviesCategoryAdapter;
-    private ContentLoadingProgressBar videoLoadingPb;
-    private TextView tv_no_cat;
+
+    @BindView(R.id.loading_categories) ContentLoadingProgressBar videoLoadingPb;
+    @BindView(R.id.tv_no_cat) TextView tv_no_cat;
+    @BindView(R.id.tv_no_network) TextView tv_no_network;
+    @BindView(R.id.movies_recycler_view) RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -44,10 +50,8 @@ public class MoviesCategoryFragment extends Fragment{
         super.onCreateView(inflater, container, savedInstanceState);
         //Inflate movie1 fragment. sharing it with MovieFragment
         View view = inflater.inflate(R.layout.movie_fragment, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.movies_recycler_view);
-        tv_no_cat = view.findViewById(R.id.tv_no_cat);
+        ButterKnife.bind(this, view);
 
-        videoLoadingPb = view.findViewById(R.id.loading_categories);
         videoLoadingPb.setVisibility(View.VISIBLE);
         moviesCategoryList = new ArrayList<>();
         moviesCategoryAdapter = new MoviesCategoryAdapter(getContext(), moviesCategoryList);
@@ -90,7 +94,9 @@ public class MoviesCategoryFragment extends Fragment{
             @Override
             public void onFailure(Call<List<MoviesCategory>> call, Throwable t) {
                 //Network error
-                tv_no_cat.setVisibility(View.VISIBLE);
+                tv_no_network.setVisibility(View.VISIBLE);
+                tv_no_network.setTextSize(24);
+                tv_no_network.setTextColor(Color.BLACK);
 
                 Toast.makeText(getContext(), "Network Error ", Toast.LENGTH_LONG).show();
                 videoLoadingPb.setVisibility(View.GONE);
