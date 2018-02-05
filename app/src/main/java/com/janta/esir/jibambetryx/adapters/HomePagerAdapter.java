@@ -1,12 +1,11 @@
 package com.janta.esir.jibambetryx.adapters;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.janta.esir.jibambetryx.MoviesCategoryFragment;
-import com.janta.esir.jibambetryx.MoviesFragment;
+import com.janta.esir.jibambetryx.SeriesFragment;
 
 /**
  * Created by isaiahngaruiya on 17/01/2018.
@@ -21,7 +20,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter{
     public Fragment getItem(int position) {
         //Show Movies categories on first tab and series on the other tab
         Fragment moviesCategoriesFragment = new MoviesCategoryFragment();
-        Fragment seriesFragment = new MoviesFragment();
+        Fragment seriesFragment = new SeriesFragment();
 
         if(position == 0) {
             return moviesCategoriesFragment;
