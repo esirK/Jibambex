@@ -2,6 +2,7 @@ package com.janta.esir.jibambetryx.helpers;
 
 import com.janta.esir.jibambetryx.models.Movie;
 import com.janta.esir.jibambetryx.models.MoviesCategory;
+import com.janta.esir.jibambetryx.models.Series;
 
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface JibambeApi {
 
     @GET("/moviescategories/{id}")
     Call<List<Movie>> specificCategory(@Path("id") int id);
+
+    @GET("/series")
+    Call<List<Series>> allSeries();
 }

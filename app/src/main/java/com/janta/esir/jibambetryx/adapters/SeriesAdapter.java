@@ -34,7 +34,10 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         this.mContext = context;
         this.seriesList = seriesList;
     }
-
+    public void updateSeries(List<Series> ALlSeries){
+        this.seriesList = ALlSeries;
+        notifyDataSetChanged();
+    }
     @Override
     public SeriesAdapter.SeriesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View SeriesView = LayoutInflater.from(parent.getContext()).inflate(R.layout.series_layout, parent, false);
@@ -68,7 +71,11 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
 
     @Override
     public int getItemCount() {
-        return seriesList.size();
+        if(seriesList != null) {
+            return seriesList.size();
+        }else {
+            return 0;
+        }
     }
 
     static class SeriesViewHolder extends RecyclerView.ViewHolder{

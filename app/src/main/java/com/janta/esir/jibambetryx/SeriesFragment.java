@@ -11,10 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.janta.esir.jibambetryx.adapters.MovieAdapter;
 import com.janta.esir.jibambetryx.adapters.SeriesAdapter;
-import com.janta.esir.jibambetryx.models.Movie;
+import com.janta.esir.jibambetryx.helpers.JibambeApi;
 import com.janta.esir.jibambetryx.models.Series;
 
 import java.util.ArrayList;
@@ -22,6 +23,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by isaiahngaruiya on 17/01/2018.
@@ -34,6 +40,7 @@ public class SeriesFragment extends Fragment{
 
     @BindView(R.id.loading_categories) ContentLoadingProgressBar loadingProgressBar;
     @BindView(R.id.movies_recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.tv_no_series) TextView tv_no_series;
 
     @Nullable
     @Override
@@ -56,24 +63,41 @@ public class SeriesFragment extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(seriesAdapter);
 
-        sampleMovies();
+        generateSeries();
         return rootView;
     }
 
-    private void sampleMovies() {
-        String url = "http://dl.tehmovies.org/94/series/24.legacy/s1/";
-        String [] movies_urls = new String[]{
-                url+"24.Legacy.S01E01.PROPER.480p.Tehmovies_me.mkv",
-                url+"24.Legacy.S01E02.480p.Tehmovies_me.mkv",
-                url+"24.Legacy.S01E03.480p.HDTV.Tehmovies_me.mkv",
-                url+"24.Legacy.S01E04.480p.Tehmovies_me.mkv",
-                url+"24.Legacy.S01E05.480p.Tehmovies_me.mkv"
-        };
-        for(int x=0; x<movies_urls.length; x++) {
-            Series a = new Series("Legacy " + (x+1), "https://4.bp.blogspot.com/-jJg6Ohf7Tdw/WJpV583xEvI/AAAAAAAAJKM/rxrNefe-m2UzYcoG-3Ig-e-PxBu7PtrfgCLcB/s1600/16508321_10103551736179324_7216610480964308825_n.jpg", x);
-            seriesList.add(a);
-        }
-        loadingProgressBar.setVisibility(View.GONE);
-        seriesAdapter.notifyDataSetChanged();
+    private void generateSeries() {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(Utils.URL)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        JibambeApi jibambeApi = retrofit.create(JibambeApi.class);
+        Call<List<Series>> call = jibambeApi.allSeries();
+
+        call.enqueue(new Callback<List<Series>>() {
+            @Override
+            public void onResponse(Call<List<Series>> call, Response<List<Series>> response) {
+                seriesList = response.body();
+                loadingProgressBar.setVisibility(View.GONE);
+                seriesAdapter.updateSeries(seriesList);
+                if(seriesList != null) {
+                    if (seriesList.size() == 0) {
+                        tv_no_series.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    tv_no_series.setText("Server Error");
+                    tv_no_series.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Series>> call, Throwable t) {
+                loadingProgressBar.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "Network Error ", Toast.LENGTH_LONG).show();
+                tv_no_series.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }
