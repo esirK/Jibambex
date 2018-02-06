@@ -86,7 +86,13 @@ public class MoviesCategoryFragment extends Fragment{
                 moviesCategoryList = response.body();
                 moviesCategoryAdapter.updateCategories(moviesCategoryList);
                 videoLoadingPb.setVisibility(View.INVISIBLE);
-                if (moviesCategoryList.size() == 0){
+
+                if (moviesCategoryList != null){
+                    if (moviesCategoryList.size() == 0){
+                        tv_no_cat.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    tv_no_cat.setText("Server Error");
                     tv_no_cat.setVisibility(View.VISIBLE);
                 }
             }

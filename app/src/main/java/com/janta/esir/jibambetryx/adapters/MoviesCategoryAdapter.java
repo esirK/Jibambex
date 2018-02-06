@@ -89,7 +89,12 @@ public class MoviesCategoryAdapter extends RecyclerView.Adapter<MoviesCategoryAd
 
     @Override
     public int getItemCount() {
-        return moviesCategoryList.size();
+        // In cases when the server is up but not responding, moviesCategoryList will be null
+        if(moviesCategoryList != null){
+            return moviesCategoryList.size();
+        }else {
+            return 0;
+        }
     }
 
     static class CategoriesViewHolder extends RecyclerView.ViewHolder{
