@@ -26,8 +26,10 @@
         android:text="No Movie Category Found"
         android:id="@+id/tv_no_cat"
         android:textAlignment="center"
-        android:gravity="center_vertical"
         android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         />
     <TextView
         android:layout_width="match_parent"
@@ -35,7 +37,9 @@
         android:text="No Series Found"
         android:id="@+id/tv_no_series"
         android:textAlignment="center"
-        android:gravity="center_vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:visibility="gone"
         />
     <TextView
@@ -44,7 +48,9 @@
         android:text="No Network"
         android:id="@+id/tv_no_network"
         android:textAlignment="center"
-        android:gravity="center_vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:visibility="gone"
         />
 </RelativeLayout>
