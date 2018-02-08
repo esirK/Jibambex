@@ -6,7 +6,7 @@ package com.janta.esir.jibambetryx.models;
 
 public class Series {
     private String name, thumbnail;
-    private int seasons;
+    private int seasons, id;
 
     public Series(){
 
@@ -26,5 +26,9 @@ public class Series {
     }
     public String getThumbnail(){
         return this.thumbnail;
+    }
+
+    public int getId() {
+        return id;
     }
 }

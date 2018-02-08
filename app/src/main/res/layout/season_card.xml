@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <android.support.v7.widget.CardView
-        android:id="@+id/series_card"
+        android:id="@+id/movie_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -18,15 +18,15 @@
             >
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movie_card_height"
-                >
+                android:layout_height="@dimen/movie_card_height">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"
                     android:scaleType="fitXY"
-                    android:id="@+id/series_thumbnail"
+                    android:id="@+id/season_thumbnail"
                     />
                 <android.support.v4.widget.ContentLoadingProgressBar
                     android:id="@+id/loading_img"
@@ -36,20 +36,20 @@
                     android:layout_gravity="center"
                     android:visibility="visible" />
             </FrameLayout>
-            <TextView
-                android:id="@+id/series_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/movie_title_padding"
-                android:text="Avangers"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+                <TextView
+                    android:id="@+id/season_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/movie_title_padding"
+                    android:text="Season1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
 
             <TextView
-                android:id="@+id/series_seasons"
+                android:id="@+id/num_episodes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/movie_title_padding"
-                android:text="3 Seasons"
+                android:text="Duration: 2hrs"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
