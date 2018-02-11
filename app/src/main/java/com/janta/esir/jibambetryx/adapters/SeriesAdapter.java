@@ -76,11 +76,13 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "You selected "+SingleSerie.getName(), Toast.LENGTH_LONG).show();
                 Intent singleSeries = new Intent(mContext, SingleSeries.class);
                 // Start a new activity showing all seasons in this series
                 Bundle args = new Bundle();
                 args.putInt("series_id", SingleSerie.getId());
+                //Pass series name for use as toolbar title
+
+                args.putString("series_name", SingleSerie.getName());
                 singleSeries.putExtras(args);
                 mContext.startActivity(singleSeries);
             }

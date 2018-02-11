@@ -9,9 +9,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.janta.esir.jibambetryx.adapters.SeasonAdapter;
 import com.janta.esir.jibambetryx.helpers.JibambeApi;
@@ -36,6 +36,7 @@ public class SingleSeries extends AppCompatActivity{
 
     SeasonAdapter seasonAdapter;
     List<Season> seasonList;
+    String SeriesTitle;
 
     @BindView(R.id.movies_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -47,8 +48,14 @@ public class SingleSeries extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_category);
         ButterKnife.bind(this);
+
+        SeriesTitle = getIntent().getExtras().getString("series_name");
+        toolbar.setTitle(SeriesTitle);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Log.e("SeriesTitle", SeriesTitle);
 
         seasonList = new ArrayList<>();
         seasonAdapter = new SeasonAdapter(seasonList, this);
@@ -85,12 +92,22 @@ public class SingleSeries extends AppCompatActivity{
                 seasonList = response.body();
                 loading_season.setVisibility(View.GONE);
                 seasonAdapter.updateSeasons(seasonList);
-                seasonAdapter.notifyDataSetChanged();
+                if(seasonList != null) {
+                    if (seasonList.size() == 0) {
+                        tv_no_seasons.setText("No Seasons Available");
+                        tv_no_seasons.setVisibility(View.VISIBLE);
+                    }
+                }else{
+                    tv_no_seasons.setText("Server Error");
+                    tv_no_seasons.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailure(Call<List<Season>> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Network Error ", Toast.LENGTH_LONG).show();
+                loading_season.setVisibility(View.GONE);
+                tv_no_seasons.setText("Network Error. Server Not Found");
+                tv_no_seasons.setVisibility(View.VISIBLE);
             }
         });
     }

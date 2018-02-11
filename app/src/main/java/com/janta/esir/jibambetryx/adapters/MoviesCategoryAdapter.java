@@ -81,6 +81,10 @@ public class MoviesCategoryAdapter extends RecyclerView.Adapter<MoviesCategoryAd
                 Bundle args = new Bundle();
                 args.putString("name", moviesCategory.getName());
                 args.putInt("index", moviesCategory.getId());
+
+                //pass an argument showing it was called from movie category adapter
+                args.putInt("from", 1);
+
                 singleCategory.putExtras(args);
                 mContext.startActivity(singleCategory);
             }

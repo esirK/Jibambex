@@ -42,15 +42,4 @@
         android:layout_gravity="center"
         android:visibility="gone"
         />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No Network"
-        android:id="@+id/tv_no_network"
-        android:textAlignment="center"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        />
 </RelativeLayout>

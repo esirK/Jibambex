@@ -41,7 +41,6 @@ public class MoviesCategoryFragment extends Fragment{
 
     @BindView(R.id.loading_categories) ContentLoadingProgressBar videoLoadingPb;
     @BindView(R.id.tv_no_cat) TextView tv_no_cat;
-    @BindView(R.id.tv_no_network) TextView tv_no_network;
     @BindView(R.id.movies_recycler_view) RecyclerView recyclerView;
 
     @Nullable
@@ -100,11 +99,10 @@ public class MoviesCategoryFragment extends Fragment{
             @Override
             public void onFailure(Call<List<MoviesCategory>> call, Throwable t) {
                 //Network error
-                tv_no_network.setVisibility(View.VISIBLE);
-                tv_no_network.setTextSize(24);
-                tv_no_network.setTextColor(Color.BLACK);
+                tv_no_cat.setText("No Network Access: Server not found");
+                tv_no_cat.setVisibility(View.VISIBLE);
+                tv_no_cat.setTextColor(Color.BLACK);
 
-                Toast.makeText(getContext(), "Network Error ", Toast.LENGTH_LONG).show();
                 videoLoadingPb.setVisibility(View.GONE);
             }
         });

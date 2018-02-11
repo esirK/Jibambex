@@ -22,6 +22,9 @@ public interface JibambeApi {
     @GET("/moviescategories/{id}")
     Call<List<Movie>> specificCategory(@Path("id") int id);
 
+    @GET("/episodes/{id}")
+    Call<List<Movie>> specificSeason(@Path("id") int id);
+
     @GET("/series")
     Call<List<Series>> allSeries();
 

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.janta.esir.jibambetryx.adapters.SeriesAdapter;
 import com.janta.esir.jibambetryx.helpers.JibambeApi;
@@ -63,11 +62,14 @@ public class SeriesFragment extends Fragment{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(seriesAdapter);
 
-        generateSeries();
+        getSeries();
         return rootView;
     }
 
-    private void generateSeries() {
+    private void getSeries() {
+
+        // Loads different series from the LAN server
+
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Utils.URL)
                 .addConverterFactory(GsonConverterFactory.create());
@@ -95,7 +97,7 @@ public class SeriesFragment extends Fragment{
             @Override
             public void onFailure(Call<List<Series>> call, Throwable t) {
                 loadingProgressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(), "Network Error ", Toast.LENGTH_LONG).show();
+                tv_no_series.setText("No Network Access: Server not found");
                 tv_no_series.setVisibility(View.VISIBLE);
             }
         });

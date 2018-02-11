@@ -38,7 +38,7 @@ public class SingleCategory extends AppCompatActivity{
 
     private List<Movie> movieList;
     private MovieAdapter movieAdapter;
-    private int category_id;
+    private int category_id, from;
 
     @BindView(R.id.movies_recycler_view) RecyclerView recyclerView;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -57,6 +57,7 @@ public class SingleCategory extends AppCompatActivity{
 
         String title = getIntent().getExtras().getString("name");
         category_id = getIntent().getExtras().getInt("index");
+        from = getIntent().getExtras().getInt("from");
 
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
@@ -82,8 +83,13 @@ public class SingleCategory extends AppCompatActivity{
 
         Retrofit retrofit = builder.build();
         JibambeApi jibambeApi = retrofit.create(JibambeApi.class);
-        Call<List<Movie>> call = jibambeApi.specificCategory(category_id);
-
+        Call<List<Movie>> call;
+        if (from == 1){
+           call = jibambeApi.specificCategory(category_id);
+        }
+        else {
+            call = jibambeApi.specificSeason(category_id);
+        }
         call.enqueue(new Callback<List<Movie>>() {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
@@ -93,7 +99,12 @@ public class SingleCategory extends AppCompatActivity{
                 loading_movies.setVisibility(View.GONE);
 
                 if(movieList.size() == 0){
-                    tv_no_movie.setVisibility(View.VISIBLE);
+                    if(from == 1) {
+                        tv_no_movie.setVisibility(View.VISIBLE);
+                    }else{
+                        tv_no_movie.setText("No Episodes Available");
+                        tv_no_movie.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 

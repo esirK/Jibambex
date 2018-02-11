@@ -1,6 +1,8 @@
 package com.janta.esir.jibambetryx.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.janta.esir.jibambetryx.R;
+import com.janta.esir.jibambetryx.SingleCategory;
 import com.janta.esir.jibambetryx.models.Season;
 
 import java.util.List;
@@ -72,7 +75,18 @@ public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.SeasonView
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "You clicked " + season.getName(), Toast.LENGTH_SHORT).show();
+
+                        //Open an activity for episodes in this season
+                        Intent singleCategory = new Intent(mContext, SingleCategory.class);
+                        Bundle args = new Bundle();
+                        args.putString("name", season.getName());
+                        args.putInt("index", Integer.parseInt(season.getId()));
+
+                        //pass an argument showing it was called from season adapter
+                        args.putInt("from", 2);
+
+                        singleCategory.putExtras(args);
+                        mContext.startActivity(singleCategory);
                     }
                 }
         );
